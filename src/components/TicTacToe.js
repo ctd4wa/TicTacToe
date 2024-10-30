@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Board from "./Board";
 import GameOver from "./GameOver";
 import GameState from "./GameState";
+import Reset from "./Reset";
 
 const PLAYER_X = "X";
 const PLAYER_O = "O";
@@ -54,11 +55,7 @@ function TicTacToe() {
   const [playerTurn, setPlayerTurn] = useState(PLAYER_X);
   const [strikeClass, setStrikeClass] = useState();
   const [gameState, setGameState] = useState(GameState.inProgress);
-
-  useEffect(() => {
-    checkWinner(tiles, setStrikeClass, setGameState);
-  }, [tiles]);
-
+  
   const handleTileClick = (index) => {
     if(gameState !== GameState.inProgress) {
       return;
@@ -77,6 +74,19 @@ function TicTacToe() {
       setPlayerTurn(PLAYER_X);
     }
   };
+
+  const handleReset = () => {
+    setGameState(GameState.inProgress);
+    setTiles(Array(9).fill(null));
+    setPlayerTurn(PLAYER_X);
+    setStrikeClass(null);
+  }
+
+  useEffect(() => {
+    checkWinner(tiles, setStrikeClass, setGameState);
+  }, [tiles]);
+
+
   return (
     <div>
       <h1>Tic Tac Toe</h1>
@@ -87,6 +97,7 @@ function TicTacToe() {
         strikeClass={strikeClass}
       />
       <GameOver gameState={gameState} />
+      <Reset gameState={gameState} onReset={handleReset}/> 
     </div>
   );
 }
