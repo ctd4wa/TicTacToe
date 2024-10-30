@@ -3,6 +3,8 @@ import Board from "./Board";
 import GameOver from "./GameOver";
 import GameState from "./GameState";
 import Reset from "./Reset";
+// Confetti import
+import Confetti from "react-confetti";
 
 const PLAYER_X = "X";
 const PLAYER_O = "O";
@@ -89,6 +91,7 @@ function TicTacToe() {
 
   return (
     <div>
+      {gameState === GameState.playerOWins || gameState === GameState.playerXWins ? <Confetti /> : null}
       <h1>Tic Tac Toe</h1>
       <Board
         playerTurn={playerTurn}
